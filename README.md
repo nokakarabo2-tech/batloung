@@ -16,7 +16,7 @@ An inventory and sales application for a fruit distribution business. The fronte
 ## First-time setup
 
 1. Create the database tables and sample data in MySQL by running `database/schema.sql`, then `database/seed.sql` (for example, in MySQL Workbench).
-2. In `backend/`, copy `.env.example` to `.env` and set `DB_PASSWORD` to your MySQL password. Check the other `DB_*` values match your local MySQL setup.
+2. In `backend/`, copy `.env.example` to `.env` and set `DB_PASSWORD` to your MySQL password. Check the other `DB_*` values match your local MySQL setup. Keep `DB_SSL=false` for local MySQL unless your local server requires TLS.
 3. Install dependencies once in each app folder:
 
    ```powershell
@@ -63,6 +63,18 @@ When both services and MySQL are running, the response is:
 ```
 
 The API base URL when accessed directly is `http://localhost:3000/api`.
+
+## Connect a hosted MySQL database
+
+For hosted databases that require encrypted connections (such as TiDB Cloud), configure the backend service's environment variables in its hosting dashboard:
+
+- `DB_HOST` — database hostname from the provider
+- `DB_PORT` — database port from the provider
+- `DB_USER` and `DB_PASSWORD` — database credentials
+- `DB_NAME` — database name
+- `DB_SSL=true` — enable TLS (minimum TLS 1.2)
+
+Do not use `localhost` for a hosted database. Keep credentials in the hosting provider's environment settings, not in source code. Redeploy the backend after changing the variables, then check `/api/health`; a successful connection returns `{"api":"ok","database":"ok"}`.
 
 ## Main API routes
 
