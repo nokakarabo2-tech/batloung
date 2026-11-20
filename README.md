@@ -64,6 +64,10 @@ When both services and MySQL are running, the response is:
 
 The API base URL when accessed directly is `http://localhost:3000/api`.
 
+## Deploy the frontend to Vercel
+
+Set Vercel's **Root Directory** to `frontend` and its build output directory to `dist`. The frontend build script invokes Vite through Node, and `frontend/vercel.json` forwards `/api/*` requests to the deployed Render API.
+
 ## Connect a hosted MySQL database
 
 For hosted databases that require encrypted connections (such as TiDB Cloud), configure the backend service's environment variables in its hosting dashboard:
